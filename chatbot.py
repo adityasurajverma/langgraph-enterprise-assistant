@@ -2,15 +2,9 @@
 Chatbot core — LangGraph ReAct agent + LangChain SQLDatabase.
 
 Two entry points:
-  process_message() → dict          (kept for compatibility)
-  stream_message()  → NDJSON events (used by the SSE endpoint)
+  process_message() → dict (kept for compatibility)
+  stream_message()  → NDJSON  (used by the SSE endpoint)
 
-Tools:
-  sql_query             → Dynamic SELECT on all tables (LangChain SQLDatabase)
-  sql_schema            → Table schema / column introspection
-  search_pdf_library    → ChromaDB vector store (PDFs)
-  mark_attendance       → Attendance write — controlled, structured response
-  get_attendance_report → Attendance read  — structured response
 """
 from __future__ import annotations
 
