@@ -65,20 +65,8 @@ def _extract_text(filepath: str) -> str:
 
 
 def _chunk_text(text: str, chunk_size: int = 600) -> list[str]:
-    sentences = re.split(r"(?<=[.!?])\s+", text)
-    chunks: list[str] = []
-    current = ""
-    for sentence in sentences:
-        if len(current) + len(sentence) <= chunk_size:
-            current += " " + sentence
-        else:
-            if current.strip():
-                chunks.append(current.strip())
-            current = sentence
-    if current.strip():
-        chunks.append(current.strip())
-    return [c for c in chunks if len(c) > 40]
-
+   # Text chunking logic — available upon request
+    pass
 
 # ── public API ────────────────────────────────────────────────────────────────
 
@@ -121,14 +109,7 @@ def load_pdfs() -> int:
         return 0
 
     # Embed in batches so large libraries don't OOM
-    batch_size = 64
-    for i in range(0, len(all_docs), batch_size):
-        b_ids   = all_ids[i : i + batch_size]
-        b_docs  = all_docs[i : i + batch_size]
-        b_metas = all_metas[i : i + batch_size]
-        embeddings = model.encode(b_docs, show_progress_bar=False).tolist()
-        collection.upsert(ids=b_ids, documents=b_docs, metadatas=b_metas, embeddings=embeddings)
-
+    # Batch embedding logic — available upon request
     return len(all_docs)
 
 
@@ -138,22 +119,8 @@ def query_pdfs(question: str, top_k: int = 3) -> list[dict]:
     Returns a list of dicts: {text, source, score}.
     Score is cosine similarity (higher = more relevant).
     """
-    collection = _get_collection()
-    if collection.count() == 0:
-        return []
-
-    model = _embed_model_instance()
-    q_emb = model.encode([question], show_progress_bar=False).tolist()
-    n = min(top_k, collection.count())
-
-    results = collection.query(query_embeddings=q_emb, n_results=n)
-    chunks: list[dict] = []
-    for doc, meta, dist in zip(
-        results["documents"][0], results["metadatas"][0], results["distances"][0]
-    ):
-        chunks.append({"text": doc, "source": meta["source"], "score": round(1.0 - dist, 4)})
-
-    return chunks
+     # Semantic search logic — available upon request
+    pass
 
 
 def get_pdf_list() -> list[str]:
