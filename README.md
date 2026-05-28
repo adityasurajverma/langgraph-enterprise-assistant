@@ -246,6 +246,8 @@ print(result)
 ---
 
 ## 📝 Notes
+<img width="1513" height="896" alt="a" src="https://github.com/user-attachments/assets/cc72ad6b-b303-4b1b-ab31-dafe01c8a237" />
+
 
 - `SQLDatabase` is a **singleton** — initialized once and reused across all requests to avoid repeated connection overhead.
 - `sample_rows_in_table_info=0` is set intentionally to **save ~1000 tokens per call** — column info is sufficient.
