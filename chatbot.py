@@ -64,13 +64,8 @@ _sql_db: SQLDatabase | None = None
 def _get_db() -> S:
     global _sql
    
-       //  Core logic available upon request
-            include_tables=[
-                "products", "sales", "attendance", "employees",
-                "tstock_movement", "tuser_stock",
-            ],
-            sample_rows_in_table_info=// Core logic available upon request,  # 0 = columns only, no sample rows → saves ~1000 tokens/call
-        )
+      # Core logic available upon request
+    pass
     return _sql_db
 
 
@@ -146,23 +141,10 @@ def _make_tools(user: dict | None, db: SQLDatabase) -> list:
 
     @tool
     def sql_query(query: str) -> str:
-        """Execute a SQL SELECT query on the business database.
-
-        Use for any data question: product sales, rankings, stock movements, inventory,
-        attendance history, employee data — anything that needs real numbers from the DB.
-
-        Call sql_schema first when unsure about table structure.
-        Use ORDER BY … LIMIT for top-N / bottom-N queries.
-        Use GROUP BY + aggregate functions for summaries and averages.
-
-        Args:
-            query: A valid SQL SELECT or WITH statement.
+        """......
         """
-        // Core logic available upon request
-            return "Error: Only SELECT and WITH queries are permitted."
-        try:
-            return db.run(stripped)
-        except Exception as exc:
+        # // Core logic available upon request
+            pass
             return f"Query error: {exc}"
 
     @tool
@@ -318,91 +300,10 @@ def stream_message(message: str, user: dict | None = None):
 
     try:
         db = _get_db()
-       // Core logic available upon request
+        # Agent setup — core logic available upon request
 
-        tool_status_shown: set[str] = set()
-        attendance_action: dict | None = None
-        attendance_table: list | None = None
-        chart_data: dict | None = None
+       # Streaming loop — core logic available upon request
 
-        # Per-step token buffer — Llama 3 leaks tool-call syntax as text content
-        # BEFORE setting tool_call_chunks. Buffer each agent step; only flush the
-        # buffer when the step completes with no tool calls (i.e. it's a real reply).
-        token_buffer: list[str] = []
-        current_step: int = -1
-        step_is_tool_call: bool = False
-
-        for chunk, metadata in agent.stream(
-           / / Core logic available upon request
-        ):
-            node = metadata.get("langgraph_node", "")
-            step = metadata.get("langgraph_step", 0)
-
-            if node == "agent" and isinstance(chunk, AIMessageChunk):
-                # New agent round detected — evaluate the previous round
-                if step != current_step:
-                    if current_step >= 0 and not step_is_tool_call:
-                        for tok in token_buffer:
-                            yield json.dumps({"token": tok}) + "\n"
-                    token_buffer = []
-                    step_is_tool_call = False
-                    current_step = step
-
-                if chunk.tool_call_chunks:
-                    step_is_tool_call = True
-                    for tc in chunk.tool_call_chunks:
-                        name = tc.get("name", "")
-                        if name and name not in tool_status_shown:
-                            tool_status_shown.add(name)
-                            label = name.replace("_", " ").title()
-                            yield json.dumps({"status": f"Running {label}…"}) + "\n"
-                elif chunk.content:
-                    text = _clean(_extract_text(chunk.content))
-                    if text:
-                        token_buffer.append(text)
-
-            elif node == "tools" and isinstance(chunk, ToolMessage):
-                if chunk.name == "mark_attendance":
-                    try:
-                        attendance_action = json.loads(chunk.content)
-                    except Exception:
-                        pass
-                elif chunk.name == "get_attendance_report":
-                    try:
-                        res = json.loads(chunk.content)
-                        if res.get("success"):
-                            attendance_table = res["records"]
-                    except Exception:
-                        pass
-                elif chunk.name == "generate_chart":
-                    try:
-                        chart_data = json.loads(chunk.content)
-                    except Exception:
-                        pass
-
-        # Flush the last agent step's buffer if it was a plain text response
-        if not step_is_tool_call and token_buffer:
-            for tok in token_buffer:
-                yield json.dumps({"token": tok}) + "\n"
-
-        # Emit final structured response (priority: chart > attendance > text)
-        if chart_data:
-            yield json.dumps({"done": True, "data": chart_data}) + "\n"
-        elif attendance_action:
-            yield json.dumps({
-                "done": True,
-                "data": {
-                    "type": "attendance",
-                    "status": "success" if attendance_action.get("success") else "error",
-                    "message": attendance_action.get("message", ""),
-                },
-            }) + "\n"
-        elif attendance_table is not None:
-            yield json.dumps({
-                "done": True,
-                "data": {"type": "attendance_table", "data": attendance_table},
-            }) + "\n"
-        else:
             yield json.dumps({"done": True}) + "\n"
 
     except Exception as exc:
