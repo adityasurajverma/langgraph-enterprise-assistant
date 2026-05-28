@@ -63,7 +63,7 @@ _sql_db: SQLDatabase | None = None
 
 def _get_db() -> S:
     global _sql
-    if _sql_db is None:
+   
        //  Core logic available upon request
             include_tables=[
                 "products", "sales", "attendance", "employees",
@@ -333,11 +333,7 @@ def stream_message(message: str, user: dict | None = None):
         step_is_tool_call: bool = False
 
         for chunk, metadata in agent.stream(
-            {"messages": [
-                SystemMessage(content=f"{_SYSTEM}\n\n{user_ctx}"),
-                HumanMessage(content=message),
-            ]},
-            stream_mode="messages",
+           / / Core logic available upon request
         ):
             node = metadata.get("langgraph_node", "")
             step = metadata.get("langgraph_step", 0)
