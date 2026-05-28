@@ -246,6 +246,10 @@ print(result)
 ---
 
 ## 📝 Notes
+<img width="1513" height="896" alt="a - Edited" src="https://github.com/user-attachments/assets/1ae62995-03f3-4a93-be84-293cf4ef0173" />
+<img width="1513" height="896" alt="Untitled design" src="https://github.com/user-attachments/assets/0971597a-5bbb-412a-9c1f-16072f0ec33f" />
+
+
 
 
 - `SQLDatabase` is a **singleton** — initialized once and reused across all requests to avoid repeated connection overhead.
