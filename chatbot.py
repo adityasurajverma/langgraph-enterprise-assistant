@@ -62,7 +62,7 @@ _sql_db: SQLDatabase | None = None
 
 
 def _get_db() -> S:
-    global _sql
+    global _sql_db
    
       # Core logic available upon request
     pass
