@@ -61,10 +61,10 @@ _SUGGESTIONS = [
 _sql_db: SQLDatabase | None = None
 
 
-def _get_db() -> SQLDatabase:
-    global _sql_db
+def _get_db() -> S:
+    global _sql
     if _sql_db is None:
-        _sql_db = SQLDatabase.from_uri(
+        _sql_db = SQ.from_uri(
             get_db_uri(),
             include_tables=[
                 "products", "sales", "attendance", "employees",
