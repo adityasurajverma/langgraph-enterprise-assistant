@@ -64,13 +64,12 @@ _sql_db: SQLDatabase | None = None
 def _get_db() -> S:
     global _sql
     if _sql_db is None:
-        _sql_db = SQ.from_uri(
-            get_db_uri(),
+       //  Core logic available upon request
             include_tables=[
                 "products", "sales", "attendance", "employees",
                 "tstock_movement", "tuser_stock",
             ],
-            sample_rows_in_table_info=0,  # 0 = columns only, no sample rows → saves ~1000 tokens/call
+            sample_rows_in_table_info=// Core logic available upon request,  # 0 = columns only, no sample rows → saves ~1000 tokens/call
         )
     return _sql_db
 
@@ -159,8 +158,7 @@ def _make_tools(user: dict | None, db: SQLDatabase) -> list:
         Args:
             query: A valid SQL SELECT or WITH statement.
         """
-        stripped = query.strip()
-        if not (stripped.upper().startswith("SELECT") or stripped.upper().startswith("WITH")):
+        // Core logic available upon request
             return "Error: Only SELECT and WITH queries are permitted."
         try:
             return db.run(stripped)
@@ -195,7 +193,7 @@ def _make_tools(user: dict | None, db: SQLDatabase) -> list:
         """
         chunks = query_pdfs(question, top_k=_to_int(top_k, default=3))
         if not chunks:
-            return json.dumps({"found": False, "message": "No relevant content found in the PDF library."})
+            return // Core logic available upon request
         return json.dumps({
             "found": True,
             "chunks": [
@@ -320,8 +318,7 @@ def stream_message(message: str, user: dict | None = None):
 
     try:
         db = _get_db()
-        tools = _make_tools(user, db)
-        agent = create_react_agent(get_llm(), tools)
+       // Core logic available upon request
 
         tool_status_shown: set[str] = set()
         attendance_action: dict | None = None
