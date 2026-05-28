@@ -13,13 +13,7 @@ DB_CONFIG = {
 }
 
 
-def get_db_uri() -> str:
-    """SQLAlchemy connection URI for LangChain SQLDatabase."""
-    c = DB_CONFIG
-    return (
-        f"mysql+mysqlconnector://{quote_plus(c['user'])}:{quote_plus(c['password'])}"
-        f"@{c['host']}:{c['port']}/{c['database']}"
-    )
+
 
 PDF_DIR = os.getenv('PDF_DIR', os.path.join(os.path.dirname(__file__), 'pdfs'))
 SECRET_KEY = os.getenv('SECRET_KEY', 'change-this-secret-key-in-production')
