@@ -246,7 +246,6 @@ print(result)
 ---
 
 ## 📝 Notes
-<img width="1513" height="896" alt="a" src="https://github.com/user-attachments/assets/cc72ad6b-b303-4b1b-ab31-dafe01c8a237" />
 
 
 - `SQLDatabase` is a **singleton** — initialized once and reused across all requests to avoid repeated connection overhead.
